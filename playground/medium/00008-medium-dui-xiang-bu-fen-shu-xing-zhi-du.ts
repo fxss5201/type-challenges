@@ -34,7 +34,9 @@
 
 /* _____________ 你的代码 _____________ */
 
-type MyReadonly2<T, K> = any
+type MyReadonly2<T, K extends keyof T = keyof T> = {
+  readonly [P in K]: T[P]
+} & Omit<T, K>
 
 /* _____________ 测试用例 _____________ */
 import type { Alike, Expect } from '@type-challenges/utils'
