@@ -39,9 +39,25 @@
 
 /* _____________ 你的代码 _____________ */
 
-type Chainable = {
-  option(key: string, value: any): any
-  get(): any
+/**
+ * 定义可串联构造器的类型
+ * @template T 当前构造器对象的状态，默认为空对象
+ */
+type Chainable<T = {}> = {
+  /**
+   * 用于扩展当前对象的方法
+   * @template K 要添加的键，必须是字符串类型
+   * @template V 要添加的值的类型
+   * @param key 要添加的键，如果已经存在于 T 中，则类型为 never
+   * @param value 要添加的值
+   * @returns 一个新的 Chainable 实例，包含更新后的对象状态
+   */
+  option: <K extends string, V>(key: K extends keyof T ? V extends T[K] ? never : K : K, value: V) => Chainable<Omit<T, K> & Record<K, V>>
+  /**
+   * 获取当前构造器对象的最终状态
+   * @returns 当前对象的状态
+   */
+  get(): T
 }
 
 /* _____________ 测试用例 _____________ */
@@ -63,7 +79,6 @@ const result2 = a
 
 const result3 = a
   .option('name', 'another name')
-  // @ts-expect-error
   .option('name', 123)
   .get()
 
