@@ -23,7 +23,7 @@
 
 /* _____________ 你的代码 _____________ */
 
-declare function PromiseAll(values: any): any
+declare function PromiseAll<T extends any[]>(values: [...T]): Promise<{ [K in keyof T]: Awaited<T[K]> }>
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
