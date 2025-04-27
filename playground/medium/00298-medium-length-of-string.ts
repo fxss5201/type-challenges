@@ -12,7 +12,8 @@
 
 /* _____________ 你的代码 _____________ */
 
-type LengthOfString<S extends string> = any
+type ToArray<S extends string> = S extends `${infer F}${infer R}` ? [F, ...ToArray<R>] : []
+type LengthOfString<S extends string> = ToArray<S>['length']
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
