@@ -19,7 +19,7 @@
 
 /* _____________ 你的代码 _____________ */
 
-type AnyOf<T extends readonly any[]> = any
+type AnyOf<T extends readonly any[]> = T extends [infer F, ...infer R] ? F extends 0 | '' | false | undefined | null | [] | Record<string, never> ? AnyOf<R> : true : false
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

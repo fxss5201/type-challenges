@@ -24,7 +24,7 @@
 
 /* _____________ 你的代码 _____________ */
 
-type KebabCase<S> = any
+type KebabCase<S> = S extends `${infer L}${infer R}` ? R extends Uncapitalize<R> ? `${Lowercase<L>}${KebabCase<R>}` : `${Lowercase<L>}-${KebabCase<R>}` : S
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
