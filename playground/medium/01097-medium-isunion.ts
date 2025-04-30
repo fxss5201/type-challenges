@@ -20,7 +20,8 @@
 
 /* _____________ 你的代码 _____________ */
 
-type IsUnion<T> = any
+type IsUnionTmpl<T, C extends T = T> = (T extends T ? C extends T ? true : unknown : never) extends true ? false : true
+type IsUnion<T> = IsUnionTmpl<T>
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

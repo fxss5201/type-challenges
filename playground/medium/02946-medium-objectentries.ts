@@ -23,7 +23,11 @@
 
 /* _____________ 你的代码 _____________ */
 
-type ObjectEntries<T> = any
+type ObjectEntries<T extends object, K extends keyof T = keyof T> = K extends K ? [K, T[K] extends undefined ? undefined : Required<T>[K]] : never
+
+// type ObjPartial = Partial<Model>
+// type A = Required<ObjPartial>['name']
+// type B = ObjPartial['name']
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

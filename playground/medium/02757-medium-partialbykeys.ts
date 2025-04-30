@@ -26,7 +26,22 @@
 
 /* _____________ 你的代码 _____________ */
 
-type PartialByKeys<T, K> = any
+type PartialByKeys<T, K extends keyof T = keyof T> = Omit<{
+  [P in K]+?: T[P]
+} & {
+  [P in Exclude<keyof T, K>]: T[P]
+}, never>
+
+type A = { name: string }
+type B = { age: number }
+type C = { address: string }
+type D = Omit<A & B & C, never>
+// type D = {
+//   name: string;
+//   age: number;
+//   address: string;
+// }
+// type Omit<T, K extends keyof any> = { [P in Exclude<keyof T, K>]: T[P]; }
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
