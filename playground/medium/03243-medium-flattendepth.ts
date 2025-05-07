@@ -21,7 +21,17 @@
 
 /* _____________ 你的代码 _____________ */
 
-type FlattenDepth = any
+type FlattenDepth<T extends any[], U extends number = 1, C extends any[] = []> =
+  // Check if the current depth reaches the specified maximum depth
+  C['length'] extends U
+    ? T
+    : T extends [infer F, ...infer R]
+      // Check if the first element is an array
+      ? F extends any[]
+        // Recursively flatten the first element and increment the depth
+        ? [...FlattenDepth<F, U, [...C, 1]>, ...FlattenDepth<R, U, C>]
+        : [F, ...FlattenDepth<R, U, C>]
+      : T
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

@@ -20,7 +20,9 @@
 
 /* _____________ 你的代码 _____________ */
 
-type Flip<T> = any
+type Flip<T extends Record<PropertyKey, any>> = {
+  [P in keyof T as `${T[P]}`]: P
+}
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect, NotEqual } from '@type-challenges/utils'

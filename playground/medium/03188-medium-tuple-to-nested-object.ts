@@ -18,7 +18,17 @@
 
 /* _____________ 你的代码 _____________ */
 
-type TupleToNestedObject<T, U> = any
+type TupleToNestedObject<T extends string[], U> = T extends []
+  ? U
+  : {
+      [P in T[0]]: T extends [P, ...infer R extends string[]] ? TupleToNestedObject<R, U> : never
+    }
+
+// type TupleToNestedObject<T extends any[], U> = T extends [infer F, ...infer R]
+//   ? F extends string
+//     ? { [P in F]: TupleToNestedObject<R, U> }
+//     : never
+//   : U
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
