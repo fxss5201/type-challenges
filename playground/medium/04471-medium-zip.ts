@@ -15,7 +15,11 @@
 
 /* _____________ 你的代码 _____________ */
 
-type Zip<T, U> = any
+type Zip<T extends any[], U extends any[]> = T extends [infer F, ...infer Rest]
+  ? U extends [infer S, ...infer Rest2]
+    ? [[F, S], ...Zip<Rest, Rest2>]
+    : []
+  : []
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
