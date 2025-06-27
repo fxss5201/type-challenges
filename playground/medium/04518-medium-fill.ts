@@ -24,7 +24,15 @@ type Fill<
   N,
   Start extends number = 0,
   End extends number = T['length'],
-> = any
+  Count extends any[] = [],
+  Flag extends boolean = Count['length'] extends Start ? true : false,
+> = Count['length'] extends End
+  ? T
+  : T extends [infer F, ...infer Rest]
+    ? Flag extends false
+      ? [F, ...Fill<Rest, N, Start, End, [...Count, 0]>]
+      : [N, ...Fill<Rest, N, Start, End, [...Count, 0], Flag>]
+    : T
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
