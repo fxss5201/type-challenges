@@ -18,7 +18,12 @@
 
 /* _____________ 你的代码 _____________ */
 
-type Combination<T extends string[]> = any
+type Combination<T extends string[], A = T[number], U = A> =
+  U extends infer I extends string
+    ? I | `${I} ${Combination<[], Exclude<A, I>>}`
+    : never
+
+type A = Combination<['foo', 'bar', 'baz']>
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
