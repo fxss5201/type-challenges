@@ -23,8 +23,6 @@ type Combination<T extends string[], A = T[number], U = A> =
     ? I | `${I} ${Combination<[], Exclude<A, I>>}`
     : never
 
-type A = Combination<['foo', 'bar', 'baz']>
-
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 

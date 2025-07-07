@@ -16,7 +16,11 @@
 
 /* _____________ 你的代码 _____________ */
 
-type CheckRepeatedChars<T extends string> = any
+type CheckRepeatedChars<T extends string, U extends string = ''> = T extends `${infer First}${infer Rest}`
+  ? First extends U
+    ? true
+    : CheckRepeatedChars<Rest, First | U>
+  : false
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

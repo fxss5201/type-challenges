@@ -12,7 +12,18 @@
 
 /* _____________ 你的代码 _____________ */
 
-type FirstUniqueCharIndex<T extends string> = any
+type FirstUniqueCharIndex<
+  T extends string,
+  _Acc extends string[] = [],
+> = T extends ''
+  ? -1
+  : T extends `${infer Head}${infer Rest}`
+    ? Head extends _Acc[number]
+      ? FirstUniqueCharIndex<Rest, [..._Acc, Head]>
+      : Rest extends `${string}${Head}${string}`
+        ? FirstUniqueCharIndex<Rest, [..._Acc, Head]>
+        : _Acc['length']
+    : never
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'

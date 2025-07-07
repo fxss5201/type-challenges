@@ -20,7 +20,11 @@
 
 /* _____________ 你的代码 _____________ */
 
-type Subsequence<T extends any[]> = any
+type Subsequence<T extends any[]> = T extends [infer First, ...infer Rest]
+  ? Subsequence<Rest> | [First, ...Subsequence<Rest>]
+  : []
+
+type A = Subsequence<[1, 2]>
 
 /* _____________ 测试用例 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
